@@ -1,0 +1,81 @@
+<form [formGroup]="formulario">
+    <div class="container">
+        <div class="search-container">
+            <h1 class="title">Buscar Endereço</h1>
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="search-input" placeholder="Insira o cep"
+                    formControlName="cep">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" id="btn-buscar"
+                (click)="obterEnderecos()">Pesquisar</button>
+        </div>
+    </div>
+
+    <div class="container mt-4" *ngIf="existeLista">
+        <div class="list-container">
+            <h1 class="title">Listagem Endereços</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Logradouro</th>
+                        <th scope="col">Complemento</th>
+                        <th scope="col">Localidade</th>
+                        <th scope="col">UF</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{{ endereco?.logradouro }}</th>
+                        <td>{{ endereco?.complemento }}</td>
+                        <td>{{ endereco?.localidade }}</td>
+                        <td>{{ endereco?.uf }}</td>
+                        <td>
+                            <a id="btn-editar" (click)="atribuirParaEditar()" title="Editar">
+                                <i class="icone btnEditar fa-regular fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<ng-template #modalEdicaoBoleto let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">Editar endereço</h6>
+        <button type="button" class="close" aria-label="Close"
+            (click)="fecharModalBoleto()" id="btn-fecharModal">
+            <i class="pi pi-times"></i>
+        </button>
+    </div>
+    
+    <div class="modal-body p-4" [formGroup]="formularioEdicao">  
+        <div class="row">
+            <div class="form-group col-md-5 col-12">
+                <label>Logradouro*</label>
+                <input class="form-control" id="input-logradouro" formControlName="logradouro" type="text">
+            </div>
+            <div class="form-group col-md-5 col-12">
+                <label>Complemento*</label>
+                <input class="form-control" id="input-logradouro" formControlName="complemento" type="text">
+            </div>
+            <div class="form-group col-md-4 col-12">
+                <label>Localidade*</label>
+                <input class="form-control" id="input-logradouro" formControlName="localidade" type="text">
+            </div>
+            <div class="form-group col-md-2 col-12">
+                <label>UF*</label>
+                <input class="form-control" id="input-logradouro" formControlName="uf" type="text">
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" id="btn-salvar" [disabled]="formulario.invalid" (click)="salvarEndereco()">
+            <span class="btn-text">Salvar</span>
+        </button>
+    </div>
+</ng-template>
